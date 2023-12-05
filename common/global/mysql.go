@@ -1,3 +1,10 @@
+/*
+@auth: AnRuo
+@source: 云原生运维圈
+@website: https://www.kubesre.com/
+@time: 2023/12/4
+*/
+
 package global
 
 import (
