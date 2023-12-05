@@ -1,0 +1,32 @@
+server:
+  port: 8899
+  address: 0.0.0.0
+  name: go-easy-admin
+  # # 生产环境建议使用release，debug：可以使用debug模式
+  model: debug
+
+mysql:
+  DbHost: 192.168.70.211
+  DbPort: 3306
+  DbName: go-easy-admin
+  DbUser: root
+  DbPwd: jC6Qxsf82f0K8kiT
+  MaxIdleConns: 10
+  MaxOpenConns: 100
+  # 是否开启debug，1 开启(日志中显示执行sql语句，生产建议关闭) 0 关闭
+  ActiveDebug: 0
+
+jwt:
+  realm: go-easy-admin
+  # jwt加密因子
+  key: anruo
+  #  jwt token过期时间 单位为小时
+  timeout: 1
+  # jwt token刷新时间 单位为小时
+  maxRefresh: 1
+
+operation:
+  # 是否开启操作记录审计 1 开启(操作记录会入库)  0 关闭
+  ActiveLog: 1
+  # 用于记录日志的协程数量 默认为3个
+  GoroutineNum: 3
