@@ -91,7 +91,7 @@ func UserList(ctx *gin.Context) {
 
 func UserUpdate(ctx *gin.Context) {
 	params := new(models.User)
-	if err := ctx.ShouldBindQuery(&params); err != nil {
+	if err := ctx.ShouldBindJSON(&params); err != nil {
 		global.TPLogger.Error("用户更新数据绑定失败：", err)
 		global.ReturnContext(ctx).Failed("failed", err)
 		return

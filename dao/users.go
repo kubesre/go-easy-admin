@@ -36,7 +36,7 @@ func NewUserInterface() InterfaceUsers {
 
 func (u *userInfo) ExitUser(userName, password string) (bool, uint) {
 	var user models.User
-	err := global.GORM.Where("username = ? AND password = ? AND status = ?", userName, password, true).First(&user).Error
+	err := global.GORM.Where("username = ? AND password = ? AND status = ?", userName, password, 1).First(&user).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return false, 0
 	}
@@ -112,7 +112,7 @@ func (u *userInfo) GetUserFromUserName(userName string) (*models.User, error) {
 // 用户更新
 
 func (u *userInfo) UserUpdate(userData *models.User) error {
-	if err := global.GORM.Updates(&userData).Error; err != nil {
+	if err := global.GORM.Model(&models.User{}).Where("id = ?", userData.ID).Updates(&userData).Error; err != nil {
 		return err
 	}
 	return nil
