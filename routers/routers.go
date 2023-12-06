@@ -42,6 +42,8 @@ func BaseRouters() *gin.Engine {
 		global.TPLogger.Error("初始化JWT认证中间件失败：", err)
 		panic(err)
 	}
+	// 开启全部跨域允许
+	r.Use(middles.Cors())
 	// 健康检查
 	r.GET("/health", func(ctx *gin.Context) {
 		global.ReturnContext(ctx).Successful("success", "success")
@@ -50,25 +52,26 @@ func BaseRouters() *gin.Engine {
 	// 不需要做鉴权的接口 PublicGroup
 	PublicGroup := r.Group("/api/v1")
 	{
-		PublicGroup.POST("/login", authMiddleware.LoginHandler)
+		PublicGroup.POST("/login", authMiddleware.LoginHandler).Use(middles.Cors())
 		PublicGroup.POST("/register", users.Register)
 	}
 	// 需要做鉴权的接口
 	PrivateGroup := r.Group("/api/v1")
 	// 鉴权
-	PrivateGroup.Use(gin.Recovery()).Use(middles.Cors()).Use(authMiddleware.MiddlewareFunc()).
+	PrivateGroup.Use(gin.Recovery()).Use(authMiddleware.MiddlewareFunc()).
 		Use(middles.OperationLog()).Use(middles.CasbinMiddle())
 	{
-		PrivateGroup.GET("/userinfo/", users.GetUserInfo)
-		PrivateGroup.GET("/user/list", users.ListUser)
-		PrivateGroup.GET("/role/", role.RolesInfo)
+		PrivateGroup.GET("/user/info", users.GetUserInfo)
+		PrivateGroup.GET("/user/search/list", users.UserSearchList)
+		PrivateGroup.GET("/user/list", users.UserList)
+		PrivateGroup.GET("/role/info", role.RolesInfo)
 		PrivateGroup.POST("/role/add", role.AddRole)
-		PrivateGroup.POST("/role/update/", role.UpdateRole)
+		PrivateGroup.POST("/role/update", role.UpdateRole)
 		PrivateGroup.POST("/role/bind_menu", role.AddRelationRoleAndMenu)
 		PrivateGroup.POST("/role/del", role.DelRole)
 		PrivateGroup.POST("/dept/add", dept.AddDept)
 		PrivateGroup.GET("/dept/list", dept.ListDept)
-		PrivateGroup.GET("/dept/info/", dept.InfoDept)
+		PrivateGroup.GET("/dept/info", dept.InfoDept)
 		PrivateGroup.POST("/dept/del", dept.DelDept)
 		PrivateGroup.POST("/menu/add", menu.AddMenus)
 		PrivateGroup.GET("/menu/list", menu.ListMenus)

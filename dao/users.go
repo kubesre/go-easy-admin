@@ -20,7 +20,8 @@ type InterfaceUsers interface {
 	ExitUser(userName, password string) (bool, uint)
 	Register(user *models.User) error
 	UserInfo(id uint) (*models.User, error)
-	UserList(username string, limit, page int) (*models.UserList, error)
+	UserSearchList(username string, limit, page int) (*models.UserList, error)
+	UserList(limit, page int) (*models.UserList, error)
 	GetUserFromUserName(userName string) (*models.User, error)
 }
 
@@ -58,9 +59,9 @@ func (u *userInfo) UserInfo(id uint) (*models.User, error) {
 	return &user, err
 }
 
-// 用户列表
+// 用户搜索列表
 
-func (u *userInfo) UserList(username string, limit, page int) (*models.UserList, error) {
+func (u *userInfo) UserSearchList(username string, limit, page int) (*models.UserList, error) {
 	// 定义分页起始位置
 	startSet := (page - 1) * limit
 	var (
@@ -68,6 +69,25 @@ func (u *userInfo) UserList(username string, limit, page int) (*models.UserList,
 		total    int64
 	)
 	if err := global.GORM.Model(&models.User{}).Where("username LIKE ?", username).Count(&total).
+		Limit(limit).Offset(startSet).Order("id desc").Find(&userList).Error; err != nil {
+		return nil, err
+	}
+	return &models.UserList{
+		Items: userList,
+		Total: total,
+	}, nil
+}
+
+// 用户列表
+
+func (u *userInfo) UserList(limit, page int) (*models.UserList, error) {
+	// 定义分页起始位置
+	startSet := (page - 1) * limit
+	var (
+		userList []models.User
+		total    int64
+	)
+	if err := global.GORM.Model(&models.User{}).Count(&total).
 		Limit(limit).Offset(startSet).Order("id desc").Find(&userList).Error; err != nil {
 		return nil, err
 	}

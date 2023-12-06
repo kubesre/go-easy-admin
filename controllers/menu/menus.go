@@ -7,6 +7,7 @@ time: 2023/12/1
 package menu
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-easy-admin/common/global"
 	"go-easy-admin/models"
@@ -33,6 +34,7 @@ func AddMenus(ctx *gin.Context) {
 // 获取菜单列表
 
 func ListMenus(ctx *gin.Context) {
+	fmt.Println("获取菜单列表", ctx.GetString("username"))
 	data, err := menu.NewMenusInterface().MenusList()
 	if err != nil {
 		global.ReturnContext(ctx).Failed("failed", err.Error())

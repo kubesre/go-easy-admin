@@ -44,9 +44,9 @@ func GetUserInfo(ctx *gin.Context) {
 	global.ReturnContext(ctx).Successful("success", data)
 }
 
-// 用户列表
+// 用户搜索列表
 
-func ListUser(ctx *gin.Context) {
+func UserSearchList(ctx *gin.Context) {
 	params := new(struct {
 		Name  string `form:"name"`
 		Limit int    `form:"limit"`
@@ -57,7 +57,28 @@ func ListUser(ctx *gin.Context) {
 		global.ReturnContext(ctx).Failed("failed", err)
 		return
 	}
-	data, err := users.NewUserInfo().UserList(params.Name, params.Limit, params.Page)
+	data, err := users.NewUserInfo().UserSearchList(params.Name, params.Limit, params.Page)
+	if err != nil {
+		global.ReturnContext(ctx).Failed("failed", err)
+		return
+	}
+	global.ReturnContext(ctx).Successful("success", data)
+
+}
+
+// 用户列表
+
+func UserList(ctx *gin.Context) {
+	params := new(struct {
+		Limit int `form:"limit"`
+		Page  int `form:"page"`
+	})
+	if err := ctx.ShouldBindQuery(&params); err != nil {
+		global.TPLogger.Error("用户查询数据绑定失败：", err)
+		global.ReturnContext(ctx).Failed("failed", err)
+		return
+	}
+	data, err := users.NewUserInfo().UserList(params.Limit, params.Page)
 	if err != nil {
 		global.ReturnContext(ctx).Failed("failed", err)
 		return

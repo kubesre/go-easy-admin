@@ -42,10 +42,21 @@ func (u *userInfo) UserInfo(id string) (*models.User, error) {
 	return data, nil
 }
 
+// UserList
+
+func (u *userInfo) UserSearchList(username string, limit, page int) (*models.UserList, error) {
+	data, err := dao.NewUserInterface().UserSearchList(username, limit, page)
+	if err != nil {
+		global.TPLogger.Error("UserList失败：", err)
+		return nil, errors.New("UserList失败")
+	}
+	return data, nil
+}
+
 // 用户列表
 
-func (u *userInfo) UserList(username string, limit, page int) (*models.UserList, error) {
-	data, err := dao.NewUserInterface().UserList(username, limit, page)
+func (u *userInfo) UserList(limit, page int) (*models.UserList, error) {
+	data, err := dao.NewUserInterface().UserList(limit, page)
 	if err != nil {
 		global.TPLogger.Error("用户列表查询失败：", err)
 		return nil, errors.New("用户列表查询失败")
