@@ -86,3 +86,20 @@ func UserList(ctx *gin.Context) {
 	global.ReturnContext(ctx).Successful("success", data)
 
 }
+
+// 用户更新
+
+func UserUpdate(ctx *gin.Context) {
+	params := new(models.User)
+	if err := ctx.ShouldBindQuery(&params); err != nil {
+		global.TPLogger.Error("用户更新数据绑定失败：", err)
+		global.ReturnContext(ctx).Failed("failed", err)
+		return
+	}
+	err := users.NewUserInfo().UserUpdate(params)
+	if err != nil {
+		global.ReturnContext(ctx).Failed("failed", err)
+		return
+	}
+	global.ReturnContext(ctx).Successful("success", "用户更新成功")
+}

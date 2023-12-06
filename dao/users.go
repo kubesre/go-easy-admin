@@ -23,6 +23,7 @@ type InterfaceUsers interface {
 	UserSearchList(username string, limit, page int) (*models.UserList, error)
 	UserList(limit, page int) (*models.UserList, error)
 	GetUserFromUserName(userName string) (*models.User, error)
+	UserUpdate(userData *models.User) error
 }
 
 type userInfo struct{}
@@ -106,4 +107,13 @@ func (u *userInfo) GetUserFromUserName(userName string) (*models.User, error) {
 		return nil, err
 	}
 	return &user, nil
+}
+
+// 用户更新
+
+func (u *userInfo) UserUpdate(userData *models.User) error {
+	if err := global.GORM.Updates(&userData).Error; err != nil {
+		return err
+	}
+	return nil
 }

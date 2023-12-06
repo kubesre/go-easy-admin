@@ -42,8 +42,6 @@ func (u *userInfo) UserInfo(id string) (*models.User, error) {
 	return data, nil
 }
 
-// UserList
-
 func (u *userInfo) UserSearchList(username string, limit, page int) (*models.UserList, error) {
 	data, err := dao.NewUserInterface().UserSearchList(username, limit, page)
 	if err != nil {
@@ -62,4 +60,15 @@ func (u *userInfo) UserList(limit, page int) (*models.UserList, error) {
 		return nil, errors.New("用户列表查询失败")
 	}
 	return data, nil
+}
+
+// 用户更新
+
+func (u *userInfo) UserUpdate(userData *models.User) error {
+	err := dao.NewUserInterface().UserUpdate(userData)
+	if err != nil {
+		global.TPLogger.Error("用户更新失败：", err)
+		return errors.New("用户更新失败")
+	}
+	return nil
 }

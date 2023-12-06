@@ -64,6 +64,7 @@ func BaseRouters() *gin.Engine {
 		PrivateGroup.GET("/user/info", users.GetUserInfo)
 		PrivateGroup.GET("/user/search/list", users.UserSearchList)
 		PrivateGroup.GET("/user/list", users.UserList)
+		PrivateGroup.POST("/user/update", users.UserUpdate)
 		PrivateGroup.GET("/role/info", role.RolesInfo)
 		PrivateGroup.POST("/role/add", role.AddRole)
 		PrivateGroup.POST("/role/update", role.UpdateRole)

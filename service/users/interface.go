@@ -14,6 +14,7 @@ type InterfaceUsers interface {
 	UserInfo(id string) (*models.User, error)
 	UserSearchList(username string, limit, page int) (*models.UserList, error)
 	UserList(limit, page int) (*models.UserList, error)
+	UserUpdate(userData *models.User) error
 }
 type userInfo struct{}
 

@@ -14,7 +14,7 @@ mysql:
   MaxIdleConns: 10
   MaxOpenConns: 100
   # 是否开启debug，1 开启(日志中显示执行sql语句，生产建议关闭) 0 关闭
-  ActiveDebug: 1
+  ActiveDebug: 0
 
 jwt:
   realm: go-easy-admin
