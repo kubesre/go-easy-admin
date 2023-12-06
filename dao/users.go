@@ -69,7 +69,7 @@ func (u *userInfo) UserSearchList(username string, limit, page int) (*models.Use
 		userList []models.User
 		total    int64
 	)
-	if err := global.GORM.Model(&models.User{}).Where("username LIKE ?", username).Count(&total).
+	if err := global.GORM.Model(&models.User{}).Where("username LIKE ?", "%"+username+"%").Count(&total).
 		Limit(limit).Offset(startSet).Order("id desc").Find(&userList).Error; err != nil {
 		return nil, err
 	}
