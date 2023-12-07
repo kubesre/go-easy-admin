@@ -70,6 +70,7 @@ func BaseRouters() *gin.Engine {
 		PrivateGroup.POST("/role/update", role.UpdateRole)
 		PrivateGroup.POST("/role/bind_menu", role.AddRelationRoleAndMenu)
 		PrivateGroup.POST("/role/del", role.DelRole)
+		PrivateGroup.GET("/role/list", role.ListRole)
 		PrivateGroup.POST("/dept/add", dept.AddDept)
 		PrivateGroup.GET("/dept/list", dept.ListDept)
 		PrivateGroup.GET("/dept/info", dept.InfoDept)

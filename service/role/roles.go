@@ -71,3 +71,14 @@ func (r *roleInfo) DelRole(rid []int) error {
 	}
 	return nil
 }
+
+// 角色列表
+
+func (r *roleInfo) RoleList() (roleData []*models.Role, err error) {
+	roleData, err = dao.NewRolesInterface().RoleList()
+	if err != nil {
+		global.TPLogger.Error("获取角色列表失败: ", err)
+		return nil, errors.New("获取角色列表失败")
+	}
+	return roleData, nil
+}

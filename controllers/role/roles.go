@@ -100,3 +100,14 @@ func DelRole(ctx *gin.Context) {
 	}
 	global.ReturnContext(ctx).Successful("success", "删除角色成功")
 }
+
+// 角色列表
+
+func ListRole(ctx *gin.Context) {
+	data, err := role.NewRoleInterface().RoleList()
+	if err != nil {
+		global.ReturnContext(ctx).Failed("failed", err.Error())
+		return
+	}
+	global.ReturnContext(ctx).Successful("success", data)
+}

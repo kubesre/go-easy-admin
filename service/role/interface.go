@@ -15,6 +15,7 @@ type InterfaceRole interface {
 	UpdateRole(rid string, roleData *models.Role) error
 	AddRelationRoleAndMenu(menuID, roleID []int) error
 	DelRole(rid []int) error
+	RoleList() (roleData []*models.Role, err error)
 }
 
 type roleInfo struct{}

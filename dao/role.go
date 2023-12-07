@@ -21,6 +21,7 @@ type InterfaceRoles interface {
 	UpdateRole(rid uint, roleData *models.Role) error
 	AddRelationRoleAndMenu(menuID, roleID []int) error
 	DelRole(rid []int) error
+	RoleList() (roleData []*models.Role, err error)
 }
 
 type rolesInfo struct{}
@@ -96,4 +97,13 @@ func (r *rolesInfo) DelRole(rid []int) error {
 		return err
 	}
 	return nil
+}
+
+// 角色列表
+
+func (r *rolesInfo) RoleList() (roleData []*models.Role, err error) {
+	if err = global.GORM.Model(&models.Role{}).Find(&roleData).Error; err != nil {
+		return nil, err
+	}
+	return roleData, nil
 }
