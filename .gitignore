@@ -1,4 +1,4 @@
 .idea/
 .git/
 tmp/
-config//application.yaml
+config/application.yaml
