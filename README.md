@@ -1,3 +1,4 @@
+
 ## 项目介绍
 
 `go-easy-admin`是一个非常简单的`gin+gorm`脚手架，非常适合学习完`golang`基础的同学来进行练习使用。其中角色、权限都已经设计好，我们只需要关注业务接口即可。
@@ -16,6 +17,11 @@ go-easy-admin
 ├─models  ---------------------数据库表以及请求参数定义
 ├─routers  ---------------------路由
 ├─service  ---------------------业务逻辑
+=======
+## 中间件casbin
+```shell
+go get github.com/casbin/gorm-adapter/v3
+go get github.com/casbin/casbin/v2
 ```
 
 ## 功能概述
@@ -29,8 +35,8 @@ go-easy-admin
 ### 拉取代码
 
 ```bash
-git clone  https://github.com/kubesre/go-easy-admin.git
-```
+git clone  https://github.com/kubesre/go-easy-admin.git`
+``
 
 ### 修改配置文件
 
@@ -72,3 +78,5 @@ jwt:
 ```bash
 go run main.go
 ```
+=======
+注意： casbin在数据库中的数据，可以删除整条，但是不要将整条置为null
