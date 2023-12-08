@@ -1,4 +1,20 @@
 
+<div align="center">
+<h1>Go Easy Admin</h1>
+</div><br>
+<div align=center>
+<img src="https://img.shields.io/badge/golang-1.17-blue"/>
+<img src="https://img.shields.io/badge/gin-1.9.0-lightBlue"/>
+<img src="https://img.shields.io/badge/casbin-2.37.4-brightgreen"/>
+<img src="https://img.shields.io/badge/viper-1.16.0-green"/>
+<img src="https://img.shields.io/badge/gorm-1.25.2-red"/>
+
+<p>基于Gin+Gorm实现非常简单的脚手架</p>
+</div>
+<div>
+<img src="https://camo.githubusercontent.com/82291b0fe831bfc6781e07fc5090cbd0a8b912bb8b8d4fec0696c881834f81ac/68747470733a2f2f70726f626f742e6d656469612f394575424971676170492e676966" width="800"  height="3">
+</div><br>
+
 ## 项目介绍
 
 `go-easy-admin`是一个非常简单的`gin+gorm`脚手架，非常适合学习完`golang`基础的同学来进行练习使用。其中角色、权限都已经设计好，我们只需要关注业务接口即可。
@@ -18,6 +34,8 @@ go-easy-admin
 ├─routers  ---------------------路由
 ├─service  ---------------------业务逻辑
 =======
+```
+
 ## 中间件casbin
 ```shell
 go get github.com/casbin/gorm-adapter/v3
@@ -78,5 +96,3 @@ jwt:
 ```bash
 go run main.go
 ```
-=======
-注意： casbin在数据库中的数据，可以删除整条，但是不要将整条置为null
