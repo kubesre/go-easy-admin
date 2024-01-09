@@ -38,7 +38,7 @@ func Run() {
 		goroutineNum = 3
 	}
 	for i := 0; i < goroutineNum; i++ {
-		go dao.OperationLogService.SaveOperationLogChannel(middles.OperationLogChan)
+		go dao.NewOperationLogService().SaveOperationLogChannel(middles.OperationLogChan)
 	}
 	// 关闭服务
 	go func() {

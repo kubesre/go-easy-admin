@@ -12,9 +12,9 @@ import "go-easy-admin/models"
 type InterfaceUsers interface {
 	Register(user *models.User) error
 	UserInfo(id string) (*models.User, error)
-	UserSearchList(username string, limit, page int) (*models.UserList, error)
-	UserList(limit, page int) (*models.UserList, error)
+	UserList(username string, limit, page int) (*models.UserList, error)
 	UserUpdate(userData *models.User) error
+	UserAdd(user *models.User) error
 }
 type userInfo struct{}
 
