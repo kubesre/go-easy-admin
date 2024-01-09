@@ -25,3 +25,6 @@ jwt:
   timeout: 1
   # jwt token刷新时间 单位为小时
   maxRefresh: 1
+aes:
+  # 加密使用的key
+  key: go-easy-admin

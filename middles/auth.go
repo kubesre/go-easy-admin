@@ -73,9 +73,11 @@ func loginFunc(c *gin.Context) (interface{}, error) {
 	}
 	userName := loginUser.UserName
 	password := loginUser.Password
-	ok, id := dao.NewUserInterface().ExitUser(userName, password)
+	ok, id, roleID := dao.NewUserInterface().ExitUser(userName, password)
 	if ok {
 		loginUser.ID = id
+		c.Set("id", id)
+		c.Set("roleID", roleID)
 		return &loginUser, nil
 	}
 	return nil, jwt.ErrFailedAuthentication
@@ -98,8 +100,15 @@ func unauthorized(c *gin.Context, code int, message string) {
 
 // 用户登录是执行顺序 3
 func loginResponse(c *gin.Context, code int, token string, expires time.Time) {
-	global.ReturnContext(c).Successful("success", map[string]string{
+	id, isID := c.Get("id")
+	roleID, isRoleID := c.Get("roleID")
+	if !isID || !isRoleID {
+		return
+	}
+	global.ReturnContext(c).Successful("success", map[string]interface{}{
 		"token":   token,
+		"id":      id,
+		"role_id": roleID,
 		"expires": expires.Format("2006-01-02 15:04:05"),
 	})
 	return

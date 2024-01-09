@@ -42,22 +42,13 @@ func (u *userInfo) UserInfo(id string) (*models.User, error) {
 	return data, nil
 }
 
-func (u *userInfo) UserSearchList(username string, limit, page int) (*models.UserList, error) {
-	data, err := dao.NewUserInterface().UserSearchList(username, limit, page)
+// 用户列表
+
+func (u *userInfo) UserList(username string, limit, page int) (*models.UserList, error) {
+	data, err := dao.NewUserInterface().UserList(username, limit, page)
 	if err != nil {
 		global.TPLogger.Error("UserList失败：", err)
 		return nil, errors.New("UserList失败")
-	}
-	return data, nil
-}
-
-// 用户列表
-
-func (u *userInfo) UserList(limit, page int) (*models.UserList, error) {
-	data, err := dao.NewUserInterface().UserList(limit, page)
-	if err != nil {
-		global.TPLogger.Error("用户列表查询失败：", err)
-		return nil, errors.New("用户列表查询失败")
 	}
 	return data, nil
 }
@@ -69,6 +60,17 @@ func (u *userInfo) UserUpdate(userData *models.User) error {
 	if err != nil {
 		global.TPLogger.Error("用户更新失败：", err)
 		return errors.New("用户更新失败")
+	}
+	return nil
+}
+
+// 用户添加
+
+func (u *userInfo) UserAdd(user *models.User) error {
+	err := dao.NewUserInterface().UserAdd(user)
+	if err != nil {
+		global.TPLogger.Error("用户添加失败：", err)
+		return errors.New("用户添加失败")
 	}
 	return nil
 }

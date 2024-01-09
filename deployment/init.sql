@@ -1,61 +1,197 @@
-INSERT INTO `menu` VALUES (1, '2023-12-01 21:56:29.655', '2023-12-01 21:56:29.655', NULL, '占位菜单', 'el-icon-s-home', '/ping', 0, 0, '');
-INSERT INTO `menu` VALUES (2, '2023-12-02 18:27:16.255', '2023-12-02 18:27:16.255', NULL, '系统管理', 'el-icon-s-tools', '/system', 0, 0, '');
-INSERT INTO `menu` VALUES (3, '2023-12-02 18:27:51.255', '2023-12-02 18:27:51.255', NULL, '用户管理', 'el-icon-user-solid', '/user', 0, 2, '');
-INSERT INTO `menu` VALUES (4, '2023-12-02 18:28:06.467', '2023-12-02 18:28:06.467', NULL, '部门管理', 'el-icon-more', '/dept', 0, 2, '');
-INSERT INTO `menu` VALUES (5, '2023-12-05 12:41:42.000', '2023-12-05 12:41:44.000', NULL, '菜单管理', 'el-icon-s-operation', '/menu', 0, 2, NULL);
-INSERT INTO `menu` VALUES (6, '2023-12-05 12:42:32.000', '2023-12-05 12:42:34.000', NULL, '日志管理', 'el-icon-s-opportunity', '/log', 0, 2, NULL);
-INSERT INTO `menu` VALUES (7, '2023-12-05 12:43:41.000', '2023-12-05 12:43:45.000', NULL, '角色管理', 'el-icon-star-off', '/role', 0, 2, NULL);
-INSERT INTO `menu` VALUES (8, '2023-12-05 12:44:22.000', '2023-12-05 12:44:24.000', NULL, '授权管理', 'el-icon-s-check', '/policy', 0, 2, NULL);
+/*
+ Navicat Premium Data Transfer
 
-INSERT INTO `role` VALUES (1, '2023-12-01 20:05:17.000', '2023-12-01 22:26:03.122', NULL, 'admin', '管理员');
+ Source Server         : dev-192.168.70.211
+ Source Server Type    : MySQL
+ Source Server Version : 50732
+ Source Host           : 192.168.70.211:3306
+ Source Schema         : password_manager
+
+ Target Server Type    : MySQL
+ Target Server Version : 50732
+ File Encoding         : 65001
+
+ Date: 09/01/2024 13:31:13
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for menu
+-- ----------------------------
+DROP TABLE IF EXISTS `menu`;
+CREATE TABLE `menu`  (
+                         `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                         `created_at` datetime(3) NULL DEFAULT NULL,
+                         `updated_at` datetime(3) NULL DEFAULT NULL,
+                         `deleted_at` datetime(3) NULL DEFAULT NULL,
+                         `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '\'菜单名称\'',
+                         `name_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '\'前端路径name\'',
+                         `is_show` tinyint(1) NULL DEFAULT 2 COMMENT '\'状态(1隐藏/2显示, 默认正常)\'',
+                         `icon` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '\'菜单图标\'',
+                         `path` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '\'菜单访问路径\'',
+                         `sort` int(3) NULL DEFAULT 0 COMMENT '\'菜单顺序(同级菜单, 从0开始, 越小显示越靠前)\'',
+                         `parent_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '\'父菜单编号(编号为0时表示根菜单)\'',
+                         `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '\'创建人\'',
+                         `component` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '\'前端路径\'',
+                         PRIMARY KEY (`id`) USING BTREE,
+                         INDEX `idx_menu_deleted_at`(`deleted_at`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of menu
+-- ----------------------------
+INSERT INTO `menu` VALUES (1, '2024-01-02 19:57:27.000', '2024-01-02 19:57:29.000', NULL, '系统管理', '', 2, 'el-icon-video-play', '/mall', 0, 0, NULL, '');
+INSERT INTO `menu` VALUES (2, '2024-01-02 19:58:49.000', '2024-01-02 19:58:52.000', NULL, '用户管理', 'user', 2, 'el-icon-user', '/user', 0, 1, NULL, 'User');
+INSERT INTO `menu` VALUES (3, '2024-01-02 19:59:35.000', '2024-01-02 19:59:37.000', NULL, '菜单管理', 'menu', 2, 'el-icon-location', '/menu', 0, 1, NULL, 'Menu');
+INSERT INTO `menu` VALUES (4, '2024-01-02 20:00:51.000', '2024-01-02 20:00:53.000', NULL, '角色管理', 'role', 2, 'el-icon-setting', '/role', 0, 1, NULL, 'Role');
+INSERT INTO `menu` VALUES (5, '2024-01-02 20:00:51.000', '2024-01-02 20:00:53.000', NULL, '日志管理', 'log', 2, 'el-icon-setting', '/log', 0, 1, NULL, 'Log');
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 
+/*
+ Navicat Premium Data Transfer
 
-INSERT INTO `dept` VALUES (1, '2023-12-01 20:05:52.000', '2023-12-01 20:05:55.000', NULL, '公司顶部部门', 0, 0);
-INSERT INTO `dept` VALUES (2, '2023-12-02 19:42:29.356', '2023-12-02 22:58:36.112', NULL, '郑州研发中心', 0, 0);
-INSERT INTO `dept` VALUES (3, '2023-12-02 21:46:31.487', '2023-12-02 21:46:31.487', NULL, '运维部门', 0, 2);
-INSERT INTO `dept` VALUES (4, '2023-12-02 21:46:42.011', '2023-12-02 21:46:42.011', NULL, '测试部门', 0, 2);
-INSERT INTO `dept` VALUES (5, '2023-12-02 21:47:31.413', '2023-12-02 21:47:31.413', NULL, '系统运维组', 0, 3);
+ Source Server         : dev-192.168.70.211
+ Source Server Type    : MySQL
+ Source Server Version : 50732
+ Source Host           : 192.168.70.211:3306
+ Source Schema         : password_manager
 
-INSERT INTO `user` VALUES (1, '2023-12-01 20:03:37.000', '2023-12-01 20:03:40.000', NULL, 'zhangxinglei', 'admin', '123456', '12345678901', NULL, NULL, 'https://img1.baidu.com/it/u=2206814125,3628191178&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', 1, 1, 1, '系统');
+ Target Server Type    : MySQL
+ Target Server Version : 50732
+ File Encoding         : 65001
 
-INSERT INTO `casbin_rule` VALUES (1, 'p', '1', '/health', 'GET', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (2, 'p', '1', '/api/v1/login', 'POST', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (3, 'p', '1', '/api/v1/register', 'POST', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (4, 'p', '1', '/api/v1/user/info', 'GET', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (5, 'p', '1', '/api/v1/user/list', 'GET', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (6, 'p', '1', '/api/v1/role/info', 'GET', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (7, 'p', '1', '/api/v1/role/update', 'POST', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (8, 'p', '1', '/api/v1/role/bind_menu', 'POST', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (9, 'p', '1', '/api/v1/role/del', 'POST', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (10, 'p', '1', '/api/v1/dept/add', 'POST', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (11, 'p', '1', '/api/v1/dept/list', 'GET', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (12, 'p', '1', '/api/v1/dept/info', 'GET', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (13, 'p', '1', '/api/v1/dept/del', 'POST', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (14, 'p', '1', '/api/v1/menu/add', 'POST', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (15, 'p', '1', '/api/v1/menu/list', 'GET', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (16, 'p', '1', '/api/v1/user/list', 'GET', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (17, 'p', '1', '/api/v1/policy/add', 'POST', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (18, 'p', '1', '/api/v1/policy/del', 'POST', '管理员', '', '');
-INSERT INTO `casbin_rule` VALUES (19, 'p', '1', '/api/v1/policy/list ', 'GET', '管理员', '', '');
+ Date: 09/01/2024 13:31:25
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for relation_role_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `relation_role_menu`;
+CREATE TABLE `relation_role_menu`  (
+                                       `role_id` bigint(20) UNSIGNED NOT NULL,
+                                       `menu_id` bigint(20) UNSIGNED NOT NULL,
+                                       PRIMARY KEY (`role_id`, `menu_id`) USING BTREE,
+                                       INDEX `fk_relation_role_menu_menu`(`menu_id`) USING BTREE,
+                                       CONSTRAINT `fk_relation_role_menu_menu` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+                                       CONSTRAINT `fk_relation_role_menu_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of relation_role_menu
+-- ----------------------------
+INSERT INTO `relation_role_menu` VALUES (1, 1);
+INSERT INTO `relation_role_menu` VALUES (1, 2);
+INSERT INTO `relation_role_menu` VALUES (1, 3);
+INSERT INTO `relation_role_menu` VALUES (1, 4);
+INSERT INTO `relation_role_menu` VALUES (1, 5);
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 
-INSERT INTO `api_path` VALUES (1, '2023-12-05 12:47:45.000', '2023-12-05 12:47:48.000', NULL, '/health', 'GET', '健康检查', 1);
-INSERT INTO `api_path` VALUES (2, '2023-12-05 10:52:30.000', '2023-12-05 10:52:32.000', NULL, '/api/v1/login', 'POST', '登录', 1);
-INSERT INTO `api_path` VALUES (3, '2023-12-05 10:52:53.000', '2023-12-05 10:52:55.000', NULL, '/api/v1/register', 'POST', '注册', 1);
-INSERT INTO `api_path` VALUES (4, '2023-12-05 10:53:19.000', '2023-12-05 10:53:22.000', NULL, '/api/v1/user/info', 'GET', '用户详情', 3);
-INSERT INTO `api_path` VALUES (5, '2023-12-05 10:53:43.000', '2023-12-05 10:53:45.000', NULL, '/api/v1/user/list', 'GET', '用户列表', 3);
-INSERT INTO `api_path` VALUES (6, '2023-12-05 10:54:15.000', '2023-12-05 10:54:18.000', NULL, '/api/v1/role/info', 'GET', '角色详情', 7);
-INSERT INTO `api_path` VALUES (7, '2023-12-05 10:55:29.000', '2023-12-05 10:55:33.000', NULL, '/api/v1/role/add', 'POST', '添加角色', 7);
-INSERT INTO `api_path` VALUES (8, '2023-12-05 10:55:54.000', '2023-12-05 10:55:56.000', NULL, '/api/v1/role/update', 'POST', '更新角色', 7);
-INSERT INTO `api_path` VALUES (9, '2023-12-05 10:56:27.000', '2023-12-05 10:56:30.000', NULL, '/api/v1/role/bind_menu', 'POST', '角色菜单绑定', 7);
-INSERT INTO `api_path` VALUES (10, '2023-12-05 10:56:52.000', '2023-12-05 10:56:54.000', NULL, '/api/v1/role/del', 'POST', '删除角色', 7);
-INSERT INTO `api_path` VALUES (11, '2023-12-05 10:57:17.000', '2023-12-05 10:57:20.000', NULL, '/api/v1/dept/add', 'POST', '添加部门', 4);
-INSERT INTO `api_path` VALUES (12, '2023-12-05 10:57:17.000', '2023-12-05 10:57:17.000', NULL, '/api/v1/dept/list', 'GET', '部门列表', 4);
-INSERT INTO `api_path` VALUES (13, '2023-12-05 10:57:17.000', '2023-12-05 10:57:17.000', NULL, '/api/v1/dept/info', 'GET', '部门详情', 4);
-INSERT INTO `api_path` VALUES (14, '2023-12-05 10:57:17.000', '2023-12-05 10:57:17.000', NULL, '/api/v1/dept/del', 'POST', '删除部门', 4);
-INSERT INTO `api_path` VALUES (15, '2023-12-05 10:57:17.000', '2023-12-05 10:57:17.000', NULL, '/api/v1/menu/add', 'POST', '添加菜单', 5);
-INSERT INTO `api_path` VALUES (16, '2023-12-05 10:57:17.000', '2023-12-05 10:57:17.000', NULL, '/api/v1/menu/list', 'GET', '菜单列表', 5);
-INSERT INTO `api_path` VALUES (17, '2023-12-05 10:57:17.000', '2023-12-05 10:57:17.000', NULL, '/api/v1/policy/add', 'POST', '添加策略', 8);
-INSERT INTO `api_path` VALUES (18, '2023-12-05 10:57:17.000', '2023-12-05 10:57:17.000', NULL, '/api/v1/policy/del', 'POST', '删除策略', 8);
-INSERT INTO `api_path` VALUES (19, '2023-12-05 10:57:17.000', '2023-12-05 10:57:17.000', NULL, '/api/v1/policy/list ', 'GET', '策略列表', 8);
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : dev-192.168.70.211
+ Source Server Type    : MySQL
+ Source Server Version : 50732
+ Source Host           : 192.168.70.211:3306
+ Source Schema         : password_manager
+
+ Target Server Type    : MySQL
+ Target Server Version : 50732
+ File Encoding         : 65001
+
+ Date: 09/01/2024 13:31:34
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for role
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role`  (
+                         `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                         `created_at` datetime(3) NULL DEFAULT NULL,
+                         `updated_at` datetime(3) NULL DEFAULT NULL,
+                         `deleted_at` datetime(3) NULL DEFAULT NULL,
+                         `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '\'角色名称\'',
+                         `desc` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '\'角色描述\'',
+                         `status` tinyint(1) NULL DEFAULT 1 COMMENT '\'用户状态(正常/禁用, 默认正常)\'',
+                         PRIMARY KEY (`id`) USING BTREE,
+                         INDEX `idx_role_deleted_at`(`deleted_at`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of role
+-- ----------------------------
+INSERT INTO `role` VALUES (1, '2023-12-18 17:38:53.000', '2023-12-28 14:45:25.921', NULL, 'admin', '管理员', 1);
+INSERT INTO `role` VALUES (2, '2023-12-21 16:46:37.000', '2023-12-21 16:46:40.000', NULL, 'read', '只读用户', 1);
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : dev-192.168.70.211
+ Source Server Type    : MySQL
+ Source Server Version : 50732
+ Source Host           : 192.168.70.211:3306
+ Source Schema         : password_manager
+
+ Target Server Type    : MySQL
+ Target Server Version : 50732
+ File Encoding         : 65001
+
+ Date: 09/01/2024 13:31:43
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user`  (
+                         `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                         `created_at` datetime(3) NULL DEFAULT NULL,
+                         `updated_at` datetime(3) NULL DEFAULT NULL,
+                         `deleted_at` datetime(3) NULL DEFAULT NULL,
+                         `uid` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '\'用戶uid\'',
+                         `username` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '\'用户名\'',
+                         `password` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '\'用户密码\'',
+                         `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '\'手机号码\'',
+                         `email` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '\'邮箱\'',
+                         `nick_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '\'用户昵称\'',
+                         `avatar` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'https://img1.baidu.com/it/u=2206814125,3628191178&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500' COMMENT '\'用户头像\'',
+                         `status` tinyint(1) NULL DEFAULT 1 COMMENT '\'用户状态(正常/禁用, 默认正常)\'',
+                         `role_id` bigint(20) UNSIGNED NULL DEFAULT 1 COMMENT '\'角色id外键\'',
+                         `dept_id` bigint(20) UNSIGNED NULL DEFAULT 1 COMMENT '\'部门id外键\'',
+                         `create_by` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '\'创建来源\'',
+                         PRIMARY KEY (`id`) USING BTREE,
+                         UNIQUE INDEX `uk_username`(`username`) USING BTREE,
+                         INDEX `idx_user_deleted_at`(`deleted_at`) USING BTREE,
+                         INDEX `fk_dept_users`(`dept_id`) USING BTREE,
+                         INDEX `fk_role_users`(`role_id`) USING BTREE,
+                         UNIQUE INDEX `username`(`username`) USING BTREE,
+                         CONSTRAINT `fk_dept_users` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+                         CONSTRAINT `fk_role_users` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, '2024-01-09 11:19:19.000', '2024-01-09 11:19:22.000', NULL, 'admin', 'admin', '25285442ebc7d3a0c20047e01d341c31', '18438613802', '123@qq.com', 'admin', 'https://img1.baidu.com/it/u=2206814125,3628191178&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', 1, 1, 1, NULL);
+INSERT INTO `user` VALUES (2, '2024-01-09 11:31:41.338', '2024-01-09 11:31:41.338', NULL, '', 'test', '25285442ebc7d3a0c20047e01d341c31', '12345678910', '', '', 'https://img1.baidu.com/it/u=2206814125,3628191178&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', 1, 1, 1, '');
+
+SET FOREIGN_KEY_CHECKS = 1;

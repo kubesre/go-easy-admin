@@ -60,7 +60,7 @@ git clone  https://github.com/kubesre/go-easy-admin.git`
 
 ```bash
 cd  go-easy-admin/config
-mv  applicatino-example.yaml   application.yaml
+mv  application-example.yaml   application.yaml
 cat  application.yaml
 server:
   port: 8899

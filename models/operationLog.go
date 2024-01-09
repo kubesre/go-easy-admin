@@ -29,3 +29,21 @@ type OperationLog struct {
 func (*OperationLog) TableName() string {
 	return "operation_log"
 }
+
+type OperationLogList struct {
+	Items []OperationLog `json:"items"`
+	Total int64          `json:"total"`
+}
+
+// IP归属地查询
+
+type IPLocation struct {
+	Data Data `json:"data"`
+}
+type Data struct {
+	Continent string `json:"continent"`
+	Owner     string `json:"owner"`
+	Prov      string `json:"prov"`
+	City      string `json:"city"`
+	District  string `json:"district"`
+}

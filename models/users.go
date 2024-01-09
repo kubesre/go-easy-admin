@@ -15,8 +15,8 @@ type User struct {
 	gorm.Model
 	ID       uint   `gorm:"primarykey" json:"id"`
 	UID      string `gorm:"column:uid;comment:'用戶uid'" json:"uid"`
-	UserName string `gorm:"column:username;comment:'用户名';size:128;uniqueIndex:uk_username" json:"username" binding:"required" form:"username"`
-	Password string `gorm:"column:password;comment:'用户密码';size:128" json:"password" binding:"required" form:"password"`
+	UserName string `gorm:"column:username;comment:'用户名';size:128;uniqueIndex:uk_username;not null;unique" json:"username"  form:"username"`
+	Password string `gorm:"column:password;comment:'用户密码';size:128" json:"password"  form:"password"`
 	Phone    string `gorm:"column:phone;comment:'手机号码';size:11" json:"phone"`
 	Email    string `gorm:"column:email;comment:'邮箱';size:128" json:"email"`
 	NickName string `gorm:"column:nick_name;comment:'用户昵称';size:128" json:"nick_name"`
