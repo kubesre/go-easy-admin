@@ -15,6 +15,21 @@ import (
 	"strconv"
 )
 
+type InterfaceRole interface {
+	AddRole(role *models.Role) error
+	RoleInfo(rid string) (*models.Role, error)
+	UpdateRole(rid string, roleData *models.Role) error
+	AddRelationRoleAndMenu(menuID, roleID []int) error
+	DelRole(rid []int) error
+	RoleList() (roleData []*models.Role, err error)
+}
+
+type roleInfo struct{}
+
+func NewRoleInterface() InterfaceRole {
+	return &roleInfo{}
+}
+
 // 创建角色
 
 func (r *roleInfo) AddRole(role *models.Role) error {

@@ -14,6 +14,17 @@ import (
 	"go-easy-admin/models"
 )
 
+type InterfaceMenus interface {
+	AddMenus(menu *models.Menu) error
+	MenusList() ([]models.Menu, error)
+}
+
+type menusInfo struct{}
+
+func NewMenusInterface() InterfaceMenus {
+	return &menusInfo{}
+}
+
 // 添加菜单
 
 func (m *menusInfo) AddMenus(menu *models.Menu) error {

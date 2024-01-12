@@ -15,6 +15,19 @@ import (
 	"strconv"
 )
 
+type InterfaceUsers interface {
+	Register(user *models.User) error
+	UserInfo(id string) (*models.User, error)
+	UserList(username string, limit, page int) (*models.UserList, error)
+	UserUpdate(userData *models.User) error
+	UserAdd(user *models.User) error
+}
+type userInfo struct{}
+
+func NewUserInfo() InterfaceUsers {
+	return &userInfo{}
+}
+
 // 用户注册
 
 func (u *userInfo) Register(user *models.User) error {
