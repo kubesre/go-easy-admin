@@ -15,6 +15,19 @@ import (
 	"strconv"
 )
 
+type InterfaceDept interface {
+	AddDept(dept *models.Dept) error
+	DeptList() ([]models.Dept, error)
+	DeptInfo(did string) ([]models.Dept, error)
+	DelDept(did int) error
+}
+
+type deptInfo struct{}
+
+func NewDeptInterface() InterfaceDept {
+	return &deptInfo{}
+}
+
 // 创建部门
 
 func (d *deptInfo) AddDept(dept *models.Dept) error {
