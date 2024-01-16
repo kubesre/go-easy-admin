@@ -10,13 +10,13 @@ package middles
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"go-easy-admin/models"
+	"go-easy-admin/models/system"
 	"time"
 )
 
 // 操纵日志
 
-var OperationLogChan = make(chan *models.OperationLog, 30)
+var OperationLogChan = make(chan *system.OperationLog, 30)
 
 func OperationLog() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -42,7 +42,7 @@ func OperationLog() gin.HandlerFunc {
 			path := c.FullPath()
 			// 获取请求方式
 			method := c.Request.Method
-			operationLog := models.OperationLog{
+			operationLog := system.OperationLog{
 				Username:   userName,
 				Ip:         c.ClientIP(),
 				IpLocation: "",

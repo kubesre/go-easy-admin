@@ -11,9 +11,6 @@
 
 <p>基于Gin+Gorm实现非常简单的脚手架</p>
 </div>
-<div>
-<img src="https://camo.githubusercontent.com/82291b0fe831bfc6781e07fc5090cbd0a8b912bb8b8d4fec0696c881834f81ac/68747470733a2f2f70726f626f742e6d656469612f394575424971676170492e676966" width="800"  height="3">
-</div><br>
 
 ## 项目介绍
 
@@ -42,12 +39,6 @@ go get github.com/casbin/gorm-adapter/v3
 go get github.com/casbin/casbin/v2
 ```
 
-## 功能概述
-
-![image-20231207164738020](https://gitee.com/root_007/md_file_image/raw/master/202312071647162.png)
-
-> 其他功能前端还没有完成，暂时使用该图占位使用。
-
 ## 快速开始
 
 ### 拉取代码
@@ -60,7 +51,7 @@ git clone  https://github.com/kubesre/go-easy-admin.git`
 
 ```bash
 cd  go-easy-admin/config
-mv  application-example.yaml   application.yaml
+mv  application.yaml   application.yaml
 cat  application.yaml
 server:
   port: 8899
