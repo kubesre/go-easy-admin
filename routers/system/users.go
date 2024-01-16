@@ -17,7 +17,7 @@ func InitUserRouters(r *gin.RouterGroup) gin.IRoutes {
 		r.GET("/user/getUserInfo", system.GetUserInfo)
 		r.GET("/user/getUserList", system.UserList)
 		r.POST("/user/updateUser", system.UserUpdate)
-		r.POST("/user/addUser", system.UserAdd)
+		r.POST("/user/createUser", system.UserAdd)
 	}
 	return r
 }

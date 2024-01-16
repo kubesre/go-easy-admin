@@ -15,9 +15,9 @@ import (
 func InitRolesRouters(r *gin.RouterGroup) gin.IRoutes {
 	{
 		r.GET("/role/getRoleInfo", system.RolesInfo)
-		r.POST("/role/addRole", system.AddRole)
+		r.POST("/role/createRole", system.AddRole)
 		r.POST("/role/updateRole", system.UpdateRole)
-		r.POST("/role/addBindMenu", system.AddRelationRoleAndMenu)
+		r.POST("/role/createBindMenu", system.AddRelationRoleAndMenu)
 		r.POST("/role/deleteRole", system.DelRole)
 		r.GET("/role/getRoleList", system.ListRole)
 	}

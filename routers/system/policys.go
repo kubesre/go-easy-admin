@@ -14,8 +14,8 @@ import (
 
 func InitPolicyRouters(r *gin.RouterGroup) gin.IRoutes {
 	{
-		r.POST("/policy/addPolicy", system.AddCasbin)
-		r.POST("/policy/delPolicy", system.DelPolicy)
+		r.POST("/policy/createPolicy", system.AddCasbin)
+		r.POST("/policy/deletePolicy", system.DelPolicy)
 		r.GET("/policy/getPolicyList", system.ListPolicy)
 	}
 	return r

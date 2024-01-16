@@ -14,7 +14,7 @@ import (
 
 func InitMenusRouters(r *gin.RouterGroup) gin.IRoutes {
 	{
-		r.POST("/menu/addMenu", system.AddMenus)
+		r.POST("/menu/createMenu", system.AddMenus)
 		r.GET("/menu/getMenuList", system.ListMenus)
 	}
 	return r
