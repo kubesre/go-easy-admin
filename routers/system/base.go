@@ -10,7 +10,6 @@ package system
 import (
 	"github.com/gin-gonic/gin"
 	"go-easy-admin/common/global"
-	"go-easy-admin/controllers/system"
 	"go-easy-admin/middles"
 )
 
@@ -26,7 +25,7 @@ func InitBaseRouters(r *gin.RouterGroup) gin.IRoutes {
 		r.POST("/login", authMiddleware.LoginHandler)     // 登录
 		r.POST("/logout", authMiddleware.LogoutHandler)   // 退出
 		r.POST("/refresh", authMiddleware.RefreshHandler) // 刷新令牌
-		r.POST("/register", system.Register)              // 注册
+		//r.POST("/register", system.Register)              // 注册
 	}
 	return r
 }

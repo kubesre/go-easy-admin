@@ -14,7 +14,7 @@ import (
 
 func InitDeptRouters(r *gin.RouterGroup) gin.IRoutes {
 	{
-		r.POST("/dept/addDept", system.AddDept)
+		r.POST("/dept/createDept", system.AddDept)
 		r.GET("/dept/getDeptList", system.ListDept)
 		r.GET("/dept/getDeptInfo", system.InfoDept)
 		r.POST("/dept/deleteDept", system.DelDept)
