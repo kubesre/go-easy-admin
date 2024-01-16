@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-easy-admin/common/global"
 	"go-easy-admin/middles"
-	v1 "go-easy-admin/routers/v1"
+	"go-easy-admin/routers/system"
 	"time"
 )
 
@@ -40,22 +40,22 @@ func BaseRouters() *gin.Engine {
 		return
 	})
 	// 不需要做鉴权的接口 PublicGroup
-	PublicGroup := r.Group("/api/v1")
+	PublicGroup := r.Group("/api/base")
 	{
-		v1.InitBaseRouters(PublicGroup)
+		system.InitBaseRouters(PublicGroup)
 	}
 	// 需要做鉴权的接口
-	PrivateGroup := r.Group("/api/v1")
+	PrivateGroup := r.Group("/api/system")
 	// 鉴权
 	//PrivateGroup.Use(gin.Recovery()).
 	//	Use(middles.OperationLog()).Use(middles.CasbinMiddle())
 	{
-		v1.InitUserRouters(PrivateGroup)
-		v1.InitRolesRouters(PrivateGroup)
-		v1.InitDeptRouters(PrivateGroup)
-		v1.InitMenusRouters(PrivateGroup)
-		v1.InitPolicyRouters(PrivateGroup)
-		v1.InitLogRouters(PrivateGroup)
+		system.InitUserRouters(PrivateGroup)
+		system.InitRolesRouters(PrivateGroup)
+		system.InitDeptRouters(PrivateGroup)
+		system.InitMenusRouters(PrivateGroup)
+		system.InitPolicyRouters(PrivateGroup)
+		system.InitLogRouters(PrivateGroup)
 	}
 	r.NoRoute(func(ctx *gin.Context) {
 		global.ReturnContext(ctx).Failed("fail", "该接口未开放")

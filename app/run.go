@@ -12,7 +12,7 @@ import (
 	"fmt"
 	"github.com/spf13/viper"
 	"go-easy-admin/common/global"
-	"go-easy-admin/dao"
+	"go-easy-admin/dao/system"
 	"go-easy-admin/middles"
 	"go-easy-admin/routers"
 	"log"
@@ -38,7 +38,7 @@ func Run() {
 		goroutineNum = 3
 	}
 	for i := 0; i < goroutineNum; i++ {
-		go dao.NewOperationLogService().SaveOperationLogChannel(middles.OperationLogChan)
+		go system.NewOperationLogService().SaveOperationLogChannel(middles.OperationLogChan)
 	}
 	// 关闭服务
 	go func() {

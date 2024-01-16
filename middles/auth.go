@@ -13,8 +13,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"go-easy-admin/common/global"
-	"go-easy-admin/dao"
-	"go-easy-admin/models"
+	system2 "go-easy-admin/dao/system"
+	"go-easy-admin/models/system"
 	"strconv"
 	"time"
 )
@@ -43,7 +43,7 @@ func InitAuth() (*jwt.GinJWTMiddleware, error) {
 // 用户登录成功后被调用，并且会接收一个参数 data，表示用户信息
 // 用户登录是执行顺序 2
 func payloadFunc(data interface{}) jwt.MapClaims {
-	if v, ok := data.(*models.User); ok {
+	if v, ok := data.(*system.User); ok {
 		return jwt.MapClaims{
 			jwt.IdentityKey: v.ID,
 			"username":      v.UserName,
@@ -57,7 +57,7 @@ func payloadFunc(data interface{}) jwt.MapClaims {
 // 处理jwt 1
 func identityHandler(c *gin.Context) interface{} {
 	claims := jwt.ExtractClaims(c)
-	var jwtClaim models.User
+	var jwtClaim system.User
 	userID, _ := strconv.Atoi(fmt.Sprintf("%d", claims[jwt.IdentityKey]))
 	userNameStr := fmt.Sprintf("%s", claims["username"])
 	jwtClaim.ID = uint(userID)
@@ -67,13 +67,13 @@ func identityHandler(c *gin.Context) interface{} {
 
 // 用户登录是执行顺序 1
 func loginFunc(c *gin.Context) (interface{}, error) {
-	var loginUser models.User
+	var loginUser system.User
 	if err := c.ShouldBind(&loginUser); err != nil {
 		return "", jwt.ErrMissingLoginValues
 	}
 	userName := loginUser.UserName
 	password := loginUser.Password
-	ok, id, roleID := dao.NewUserInterface().ExitUser(userName, password)
+	ok, id, roleID := system2.NewUserInterface().ExitUser(userName, password)
 	if ok {
 		loginUser.ID = id
 		c.Set("id", id)
@@ -85,7 +85,7 @@ func loginFunc(c *gin.Context) (interface{}, error) {
 
 // 处理jwt 2
 func authorizator(data interface{}, c *gin.Context) bool {
-	if v, ok := data.(*models.User); ok {
+	if v, ok := data.(*system.User); ok {
 		c.Set("username", v.UserName)
 		return true
 	}

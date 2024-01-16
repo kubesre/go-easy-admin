@@ -10,7 +10,7 @@ package global
 import (
 	"fmt"
 	"github.com/spf13/viper"
-	"go-easy-admin/models"
+	"go-easy-admin/models/system"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
@@ -49,12 +49,12 @@ func InitMysql() {
 
 func InitMysqlTables() {
 	err = GORM.AutoMigrate(
-		models.OperationLog{},
-		models.User{},
-		models.Menu{},
-		models.Role{},
-		models.Dept{},
-		models.APIPath{},
+		system.OperationLog{},
+		system.User{},
+		system.Menu{},
+		system.Role{},
+		system.Dept{},
+		system.APIPath{},
 	)
 	if err != nil {
 		TPLogger.Error("生成数据表失败", err)
