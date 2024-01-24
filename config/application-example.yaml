@@ -28,3 +28,10 @@ jwt:
 aes:
   # 加密使用的key
   key: go-easy-admin
+
+ldap:
+  # ldap用户登录
+  address: 127.0.0.1:389
+  adminUser: cn=admin,dc=kubesre,dc=com
+  baseDN: dc=kubesre,dc=com
+  password: 123456

@@ -18,7 +18,7 @@ import (
 // 用户相关
 
 type InterfaceUsers interface {
-	ExitUser(userName, password string) (bool, uint, uint)
+	ExitUser(userName, password string) (*system.User, error)
 	Register(user *system.User) error
 	UserInfo(id uint) (*system.User, error)
 	UserList(username string, limit, page int) (*system.UserList, error)
@@ -35,17 +35,17 @@ func NewUserInterface() InterfaceUsers {
 
 // 判断用户是否存在，用户登录
 
-func (u *userInfo) ExitUser(userName, password string) (bool, uint, uint) {
-	var user system.User
+func (u *userInfo) ExitUser(userName, password string) (*system.User, error) {
+	var user *system.User
 	encryptPassword, err := utils.EncryptAES(password)
 	if err != nil {
-		return false, 0, 0
+		return nil, err
 	}
 	err = global.GORM.Where("username = ? AND password = ? AND status = ?", userName, encryptPassword, 1).First(&user).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return false, 0, 0
+		return nil, err
 	}
-	return true, user.ID, user.RoleId
+	return user, err
 }
 
 // 用户注册

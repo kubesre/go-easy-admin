@@ -34,10 +34,10 @@ func (c *casbinInfo) AddPolicy(policy []*mod.CasbinPolicy) error {
 		for _, item := range policy {
 			if ok, _ := global.CasbinEnforcer.AddPolicy(item.RoleID, item.Path, item.Method, item.Desc); !ok {
 				global.TPLogger.Error("权限已经存在")
-				return errors.New("权限已经存在")
+				continue
 			}
-			global.TPLogger.Info("权限添加成功")
 		}
+		global.TPLogger.Info("权限添加成功")
 		return nil
 	}
 	global.TPLogger.Error("权限不能为空")
@@ -51,10 +51,10 @@ func (c *casbinInfo) DelPolicy(policy []*mod.CasbinPolicy) error {
 		for _, item := range policy {
 			if ok, _ := global.CasbinEnforcer.RemovePolicy(item.RoleID, item.Path, item.Method, item.Desc); !ok {
 				global.TPLogger.Error("权限不存在")
-				return errors.New("权限不存在")
+				continue
 			}
-			return nil
 		}
+		return nil
 	}
 	global.TPLogger.Error("权限不能为空")
 	return errors.New("权限不能为空")

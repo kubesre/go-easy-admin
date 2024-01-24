@@ -13,9 +13,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"go-easy-admin/common/global"
-	system2 "go-easy-admin/dao/system"
 	"go-easy-admin/models/system"
+	system2 "go-easy-admin/service/system"
+	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -67,18 +69,30 @@ func identityHandler(c *gin.Context) interface{} {
 
 // 用户登录是执行顺序 1
 func loginFunc(c *gin.Context) (interface{}, error) {
-	var loginUser system.User
-	if err := c.ShouldBind(&loginUser); err != nil {
+	var (
+		loginUser system.User
+		err       error
+	)
+	if err = c.ShouldBind(&loginUser); err != nil {
 		return "", jwt.ErrMissingLoginValues
 	}
 	userName := loginUser.UserName
 	password := loginUser.Password
-	ok, id, roleID := system2.NewUserInterface().ExitUser(userName, password)
-	if ok {
-		loginUser.ID = id
-		c.Set("id", id)
-		c.Set("roleID", roleID)
-		return &loginUser, nil
+	// 获取请求路径
+	path := strings.Split(c.Request.RequestURI, "?")[0]
+	if !strings.Contains(path, "ldap") {
+
+		data, err := system2.NewUserInfo().ExitUser(userName, password)
+		if err == nil {
+			loginUser.ID = data.ID
+			return &loginUser, nil
+		}
+	} else {
+		data, err := system2.NewUserInfo().LdapLogin(userName, password)
+		if err == nil {
+			loginUser.ID = data.ID
+			return &loginUser, nil
+		}
 	}
 	return nil, jwt.ErrFailedAuthentication
 }
@@ -87,6 +101,7 @@ func loginFunc(c *gin.Context) (interface{}, error) {
 func authorizator(data interface{}, c *gin.Context) bool {
 	if v, ok := data.(*system.User); ok {
 		c.Set("username", v.UserName)
+		c.Set("id", v.ID)
 		return true
 	}
 	return false
@@ -94,23 +109,22 @@ func authorizator(data interface{}, c *gin.Context) bool {
 
 // 处理jwt 3
 func unauthorized(c *gin.Context, code int, message string) {
-	global.ReturnContext(c).Failed("failed", message)
+	response := gin.H{
+		"code": code,
+		"msg:": "failed",
+		"data": message,
+	}
+	c.JSON(http.StatusOK, response)
 	return
 }
 
 // 用户登录是执行顺序 3
 func loginResponse(c *gin.Context, code int, token string, expires time.Time) {
-	id, isID := c.Get("id")
-	roleID, isRoleID := c.Get("roleID")
-	if !isID || !isRoleID {
-		return
-	}
 	global.ReturnContext(c).Successful("success", map[string]interface{}{
 		"token":   token,
-		"id":      id,
-		"role_id": roleID,
 		"expires": expires.Format("2006-01-02 15:04:05"),
 	})
+	global.TPLogger.Info("用户登录成功", code)
 	return
 }
 func logoutResponse(c *gin.Context, code int) {

@@ -14,24 +14,6 @@ import (
 	service "go-easy-admin/service/system"
 )
 
-// 用户注册
-
-func Register(ctx *gin.Context) {
-	params := new(mod.User)
-	if err := ctx.ShouldBind(&params); err != nil {
-		global.ReturnContext(ctx).Failed("failed", err)
-		return
-	}
-	err := service.NewUserInfo().Register(params)
-	if err != nil {
-		global.TPLogger.Error(err)
-		global.ReturnContext(ctx).Failed("failed", err)
-		return
-	}
-	global.ReturnContext(ctx).Successful("success", "用户注册成功！！！")
-	return
-}
-
 // 用户详情
 
 func GetUserInfo(ctx *gin.Context) {
@@ -42,6 +24,19 @@ func GetUserInfo(ctx *gin.Context) {
 		return
 	}
 	global.ReturnContext(ctx).Successful("success", data)
+}
+
+// 获取登录用户详情
+
+func LoginUserInfo(ctx *gin.Context) {
+	id := ctx.Keys["id"]
+	data, err := service.NewUserInfo().UserInfo(id.(string))
+	if err != nil {
+		global.ReturnContext(ctx).Failed("failed", err.Error())
+		return
+	}
+	global.ReturnContext(ctx).Successful("success", data)
+
 }
 
 // 用户列表
