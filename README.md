@@ -80,6 +80,12 @@ jwt:
   timeout: 1
   # jwt token刷新时间 单位为小时
   maxRefresh: 1
+ldap:
+  # ldap用户登录
+  address: 127.0.0.1:389
+  adminUser: cn=admin,dc=kubesre,dc=com
+  baseDN: dc=kubesre,dc=com
+  password: 123456
 ```
 
 ### 启动服务
