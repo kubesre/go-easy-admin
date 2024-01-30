@@ -8,6 +8,8 @@
 package global
 
 import (
+	"fmt"
+	"github.com/fsnotify/fsnotify"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"os"
@@ -20,6 +22,11 @@ func InitConfig() {
 	viper.SetConfigName("application")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(workDir + "/config")
+	// 监听配置变化,无需重启应用读取配置
+	viper.WatchConfig()
+	viper.OnConfigChange(func(in fsnotify.Event) {
+		fmt.Println(in.Name, in.Op)
+	})
 	err := viper.ReadInConfig()
 	if err != nil {
 		panic("加载配置文件错误")
