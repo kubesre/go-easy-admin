@@ -26,17 +26,12 @@ func InitConfig() {
 	viper.WatchConfig()
 	viper.OnConfigChange(func(in fsnotify.Event) {
 		fmt.Println(in.Name, in.Op)
-		err := viper.ReadInConfig()
-		if err != nil {
-			panic("加载配置文件错误")
-		}
-		switch viper.GetString("server.model") {
-		case "release":
-			gin.SetMode(gin.ReleaseMode)
-		case "debug":
-			gin.SetMode(gin.DebugMode)
-		}
+		readConfig()
 	})
+	readConfig()
+}
+
+func readConfig() {
 	err := viper.ReadInConfig()
 	if err != nil {
 		panic("加载配置文件错误")
