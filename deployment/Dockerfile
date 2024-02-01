@@ -7,7 +7,7 @@ ENV GOPROXY=https://goproxy.cn,direct
 RUN mkdir /app
 ADD . /app/
 WORKDIR /app
-RUN go build -o main .
+RUN go build -ldflags "-s -w" -o main .
 
 FROM alpine:3.17.3
 RUN mkdir /app
