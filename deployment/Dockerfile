@@ -13,6 +13,7 @@ FROM alpine:3.17.3
 RUN mkdir /app
 WORKDIR /app
 COPY --from=builder /app/main .
+COPY --from=builder /app/config ./config
 
 EXPOSE 8899
 
