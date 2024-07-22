@@ -12,6 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-easy-admin/common/global"
 	"go-easy-admin/middles"
+	"go-easy-admin/routers/base"
 	"go-easy-admin/routers/system"
 	"time"
 )
@@ -34,28 +35,34 @@ func BaseRouters() *gin.Engine {
 	}))
 	// 开启全部跨域允许
 	r.Use(middles.Cors())
+	authMiddleware, err := middles.InitAuth()
+	if err != nil {
+		global.TPLogger.Error("初始化JWT中间件失败: ", err)
+		panic(fmt.Sprintf("初始化JWT中间件失败：%v", err))
+	}
 	// 健康检查
 	r.GET("/health", func(ctx *gin.Context) {
 		global.ReturnContext(ctx).Successful("success", "success")
 		return
 	})
 	// 不需要做鉴权的接口 PublicGroup
-	PublicGroup := r.Group("/api/base")
+	PublicGroup := r.Group("/api")
 	{
-		system.InitBaseRouters(PublicGroup)
+		base.InitBaseRouters(PublicGroup, authMiddleware)
 	}
 	// 需要做鉴权的接口
-	PrivateGroup := r.Group("/api/system")
+	PrivateGroup := r.Group("/api")
+	PrivateGroup.Use(authMiddleware.MiddlewareFunc())
 	// 鉴权
 	//PrivateGroup.Use(gin.Recovery()).
 	//	Use(middles.OperationLog()).Use(middles.CasbinMiddle())
 	{
-		system.InitUserRouters(PrivateGroup)
 		system.InitRolesRouters(PrivateGroup)
 		system.InitDeptRouters(PrivateGroup)
 		system.InitMenusRouters(PrivateGroup)
 		system.InitPolicyRouters(PrivateGroup)
 		system.InitLogRouters(PrivateGroup)
+		system.InitUserRouters(PrivateGroup, authMiddleware)
 	}
 	r.NoRoute(func(ctx *gin.Context) {
 		global.ReturnContext(ctx).Failed("fail", "该接口未开放")

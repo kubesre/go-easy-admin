@@ -21,7 +21,7 @@ import (
 type InterfaceUsers interface {
 	ExitUser(userName, password string) (*mod.User, error)
 	LdapLogin(userName, password string) (*mod.User, error)
-	UserInfo(id string) (*mod.User, error)
+	UserInfo(id interface{}) (*mod.User, error)
 	UserList(username string, limit, page int) (*mod.UserList, error)
 	UserUpdate(userData *mod.User) error
 	UserAdd(user *mod.User) error
@@ -43,8 +43,9 @@ func (u *userInfo) ExitUser(userName, password string) (*mod.User, error) {
 
 // 用户详情
 
-func (u *userInfo) UserInfo(id string) (*mod.User, error) {
-	idInt, err := strconv.Atoi(id)
+func (u *userInfo) UserInfo(id interface{}) (*mod.User, error) {
+	idUint := fmt.Sprintf("%d", id)
+	idInt, err := strconv.Atoi(idUint)
 	if err != nil {
 		global.TPLogger.Error("用户详情查看失败：", err)
 		return nil, errors.New("用户详情查看失败")
