@@ -30,7 +30,7 @@ func GetUserInfo(ctx *gin.Context) {
 
 func LoginUserInfo(ctx *gin.Context) {
 	id := ctx.Keys["id"]
-	data, err := service.NewUserInfo().UserInfo(id.(string))
+	data, err := service.NewUserInfo().UserInfo(id)
 	if err != nil {
 		global.ReturnContext(ctx).Failed("failed", err.Error())
 		return

@@ -16,7 +16,6 @@ import (
 	"go-easy-admin/models/system"
 	system2 "go-easy-admin/service/system"
 	"net/http"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -49,6 +48,7 @@ func payloadFunc(data interface{}) jwt.MapClaims {
 		return jwt.MapClaims{
 			jwt.IdentityKey: v.ID,
 			"username":      v.UserName,
+			"id":            v.ID,
 		}
 	}
 	// TODO 将用户数据同步进缓存
@@ -60,7 +60,7 @@ func payloadFunc(data interface{}) jwt.MapClaims {
 func identityHandler(c *gin.Context) interface{} {
 	claims := jwt.ExtractClaims(c)
 	var jwtClaim system.User
-	userID, _ := strconv.Atoi(fmt.Sprintf("%d", claims[jwt.IdentityKey]))
+	userID, _ := claims[jwt.IdentityKey].(float64)
 	userNameStr := fmt.Sprintf("%s", claims["username"])
 	jwtClaim.ID = uint(userID)
 	jwtClaim.UserName = userNameStr
