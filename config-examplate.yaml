@@ -3,18 +3,18 @@ server:
   address: 127.0.0.1
   name: go-easy-admin
   # # 生产环境建议使用 release，debug：可以使用debug模式
-  model: debug
+  model: release
   adminUser: admin
   adminPwd: 25285442ebc7d3a0c20047e01d341c31
 
 # 数据库配置
 mysql:
-  DbHost: 192.168.70.211
+  DbHost: 127.0.0.1
   DbPort: 3306
   # 数据库名称 需要提前创建好
-  DbName: go-easy-admin-v2
+  DbName: go-easy-admin
   DbUser: root
-  DbPwd: jC6Qxsf82f0K8kiT
+  DbPwd: pwd@123456
   MaxIdleConns: 10
   MaxOpenConns: 100
   # 是否开启debug，1 开启 0 关闭
