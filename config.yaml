@@ -1,0 +1,34 @@
+server:
+  port: 8899
+  address: 127.0.0.1
+  name: go-easy-admin
+  # # 生产环境建议使用 release，debug：可以使用debug模式
+  model: debug
+  adminUser: admin
+  adminPwd: 25285442ebc7d3a0c20047e01d341c31
+
+# 数据库配置
+mysql:
+  DbHost: 192.168.70.211
+  DbPort: 3306
+  # 数据库名称 需要提前创建好
+  DbName: go-easy-admin-v2
+  DbUser: root
+  DbPwd: jC6Qxsf82f0K8kiT
+  MaxIdleConns: 10
+  MaxOpenConns: 100
+  # 是否开启debug，1 开启 0 关闭
+  ActiveDebug: 0
+
+# 密码加密
+aes:
+  key: go-easy-admin
+
+jwt:
+  realm: go-easy-admin
+  # jwt加密因子
+  key: anruo
+  #  jwt token过期时间 单位为小时
+  timeout: 100
+  # jwt token刷新时间 单位为小时
+  maxRefresh: 1

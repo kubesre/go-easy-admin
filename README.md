@@ -20,18 +20,7 @@
 
 ```bash
 go-easy-admin
-├─app  ------------------------项目初始化操作
-├─common  ------------------全局公用
-├─config  ---------------------配置文件
-├─controllers  ----------------控制层
-├─dao  ------------------------数据库的CRUD
-├─deployment  ---------------部署相关文件
-├─doc  ----------------------项目文件相关说明
-├─middles  --------------------中间件
-├─models  ---------------------数据库表以及请求参数定义
-├─routers  ---------------------路由
-├─service  ---------------------业务逻辑
-=======
+待补充
 ```
 
 ## 中间件casbin
@@ -51,47 +40,48 @@ git clone  https://github.com/kubesre/go-easy-admin.git`
 ### 修改配置文件
 
 ```bash
-cd  go-easy-admin/config
-mv  application.yaml   application.yaml
-cat  application.yaml
+
+cat  config.yaml
 server:
   port: 8899
-  address: 0.0.0.0
+  address: 127.0.0.1
   name: go-easy-admin
-  # # 生产环境建议使用release，debug：可以使用debug模式
-  model: debug
+  # # 生产环境建议使用 release，debug：可以使用debug模式
+  model: release
+  adminUser: admin
+  adminPwd: 25285442ebc7d3a0c20047e01d341c31   # 密码为 123456
 
+# 数据库配置
 mysql:
   DbHost: 127.0.0.1
   DbPort: 3306
   # 数据库名称 需要提前创建好
   DbName: go-easy-admin
   DbUser: root
-  DbPwd: 123456
+  DbPwd: pwd@123456
   MaxIdleConns: 10
   MaxOpenConns: 100
   # 是否开启debug，1 开启 0 关闭
-  ActiveDebug: 1
+  ActiveDebug: 0
+
+# 密码加密
+aes:
+  key: go-easy-admin
 
 jwt:
   realm: go-easy-admin
   # jwt加密因子
   key: anruo
   #  jwt token过期时间 单位为小时
-  timeout: 1
+  timeout: 100
   # jwt token刷新时间 单位为小时
   maxRefresh: 1
-ldap:
-  # ldap用户登录
-  address: 127.0.0.1:389
-  adminUser: cn=admin,dc=kubesre,dc=com
-  baseDN: dc=kubesre,dc=com
-  password: 123456
 ```
 
 ### 执行MySQL初始化脚本
-`deployment/init.sql`文件为初始化`MySQL`数据库脚本，执行之后有对应的超级用户、角色、菜单等数据，方便项目启动之后进行测试
+script/*.sql
 
+暂未补充完整
 ### 启动服务
 
 ```bash
