@@ -1,4 +1,5 @@
 .idea/
 .git/
+.github
 tmp/
 config/application.yaml
