@@ -38,7 +38,7 @@ git clone  https://github.com/kubesre/go-easy-admin.git`
 ``
 
 ### 修改配置文件
-
+mv config-example.yaml config.yaml
 ```bash
 
 cat  config.yaml
