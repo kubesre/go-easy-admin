@@ -61,6 +61,9 @@ func (sl *sysLogin) GetLoginUserResource(ctx *gin.Context) {
 		if uv, ok := v.(uint); ok {
 			id = uv
 		}
+	} else {
+		global.ReturnContext(ctx).Failed("用户未登录", nil)
+		return
 	}
 
 	if err, data := login.GetLoginUserResource(int(id), ctx); err != nil {
