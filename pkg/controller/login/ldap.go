@@ -90,7 +90,6 @@ func GetLoginUserResource(id int, ctx context.Context) (error, interface{}) {
 	if err := global.GORM.WithContext(ctx).Model(&modeSystem.User{}).
 		Preload("Roles").
 		Preload("Roles.Menus").
-		//Preload("Roles.Menus.APIs").
 		Where("id = ?", id).
 		First(&user).Error; err != nil {
 		global.GeaLogger.Error("查询用户失败: ", err)
@@ -109,7 +108,8 @@ func GetLoginUserResource(id int, ctx context.Context) (error, interface{}) {
 	for i := range user.Roles {
 		menus = append(menus, user.Roles[i].Menus...)
 	}
-	loginUser.Menus = removeMenu(menus)
+	afterRemoveMenu := removeMenu(menus)
+	loginUser.Menus = buildMenuTree(afterRemoveMenu, 0)
 	return nil, loginUser
 }
 
@@ -124,4 +124,15 @@ func removeMenu(menus []modeSystem.Menu) (resMenus []modeSystem.Menu) {
 		resMenus = append(resMenus, item)
 	}
 	return resMenus
+}
+
+func buildMenuTree(menus []modeSystem.Menu, parentID uint) []modeSystem.Menu {
+	var tree []modeSystem.Menu
+	for _, menu := range menus {
+		if menu.ParentId == parentID {
+			menu.Children = buildMenuTree(menus, menu.ID)
+			tree = append(tree, menu)
+		}
+	}
+	return tree
 }
