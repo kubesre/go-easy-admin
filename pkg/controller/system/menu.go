@@ -95,7 +95,7 @@ func (sm *sysMenu) Update(id int, req *reqSystem.CreateMenuReq) error {
 
 func (sm *sysMenu) List() (error, interface{}) {
 	var menus []system.Menu
-	if err := global.GORM.WithContext(sm.ctx).Where("parent_id = ?", 0).Find(&menus).Error; err != nil {
+	if err := global.GORM.WithContext(sm.ctx).Where("parent_id = ?", 0).Order("sort asc").Find(&menus).Error; err != nil {
 		return global.GetErr(sm.tips, err), nil
 	}
 	for i := range menus {
