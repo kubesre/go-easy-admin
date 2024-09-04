@@ -62,7 +62,6 @@ func loginFunc(ctx *gin.Context) (interface{}, error) {
 			if user.(*system.User).Status != 1 {
 				return nil, errors.New("该用户已被禁用")
 			}
-			ctx.Set("id", user.(*system.User).ID)
 			return user, nil
 		}
 
@@ -73,7 +72,6 @@ func loginFunc(ctx *gin.Context) (interface{}, error) {
 			if user.(*system.User).Status != 1 {
 				return nil, errors.New("该用户已被禁用")
 			}
-			ctx.Set("id", user.(*system.User).ID)
 			return user, nil
 
 		}
@@ -124,10 +122,8 @@ func unauthorized(ctx *gin.Context, code int, message string) {
 
 // 登录3
 func loginResponse(ctx *gin.Context, code int, token string, expire time.Time) {
-	userID, _ := ctx.Keys["id"]
 	global.ReturnContext(ctx).Successful("success", map[string]interface{}{
 		"token":   token,
-		"id":      userID,
 		"expires": expire.Format("2006-01-02 15:04:05"),
 	})
 	return
@@ -139,10 +135,8 @@ func logoutResponse(ctx *gin.Context, code int) {
 }
 
 func refreshResponse(ctx *gin.Context, code int, token string, expire time.Time) {
-	userID, _ := ctx.Keys["id"]
 	global.ReturnContext(ctx).Successful("success", map[string]interface{}{
 		"token":   token,
-		"id":      userID,
 		"expires": expire.Format("2006-01-02 15:04:05"),
 	})
 	return
